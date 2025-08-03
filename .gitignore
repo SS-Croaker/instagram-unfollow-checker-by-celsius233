@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# macOS metadata
+.DS_Store
+
+# Streamlit cache
+.streamlit/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Jupyter Notebook checkpoints (just in case)
+.ipynb_checkpoints/
+
+# PythonAnywhere or deployment junk
+*.sqlite3
+*.db
+*.pid
+
+# VSCode / IDE config
+.vscode/
+.idea/
+
+# Output CSVs
+*.csv
