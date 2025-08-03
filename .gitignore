@@ -33,3 +33,6 @@ venv/
 
 # Output CSVs
 *.csv
+
+# text files
+*.txt
