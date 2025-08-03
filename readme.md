@@ -21,7 +21,7 @@ Just upload your **followers** and **following** data from Instagram, and the to
 
 > You need to download your data from Instagram. Here's how:
 
-1. Visit **[ Learn how to download your followers & following list](https://help.instagram.com/181231772500920)**
+1. **[ Learn how to download your followers & following list](https://help.instagram.com/181231772500920)**
 2. Follow this path in Instagram App:
     ```
     Accounts Center → Your information and permissions → Download your information
