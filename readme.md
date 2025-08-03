@@ -2,7 +2,7 @@
 
 Easily find out who you follow on Instagram that **doesn't follow you back**.
 
-Try the app here: [instagram-unfollow-checker-by-celsius233.streamlit.app](https://instagram-unfollow-checker-by-celsius233.streamlit.app)
+Try the app here: [Insta Unfollow Checker by Celsius 233](https://celsius233.com/instagram-unfollow-checker/)
 
 ---
 
@@ -37,7 +37,7 @@ Just upload your **followers** and **following** data from Instagram, and the to
 
 ## 📋 Steps to Use
 
-1. Go to the [Insta Unfollow Checker](https://instagram-unfollow-checker-by-celsius233.streamlit.app)
+1. Go to the [Insta Unfollow Checker](https://celsius233.com/instagram-unfollow-checker/)
 2. Upload your `following.json`
 3. Upload your `followers_1.json`
 4. Click the **"Reveal Unfollowers"** button
