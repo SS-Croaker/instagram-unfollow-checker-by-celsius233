@@ -2,11 +2,17 @@ import streamlit as st
 import pandas as pd
 import json
 from datetime import datetime, date
+import streamlit.components.v1 as components
 
 # Page setup
 st.set_page_config(page_title="Insta Unfollow Checker by Celsius 233", layout="centered")
-st.title("📉 Insta Unfollow Checker by Celsius 233")
+st.title("Insta Unfollow Checker by Celsius 233")
 st.markdown("Upload your Instagram follower and following `.json` files to see who you follow that doesn't follow you back.")
+st.markdown(
+    '<small>Need help? <a href="https://help.instagram.com/181231772500920" target="_blank">Learn how to download your followers & following list</a> → '
+    '<em>Select "Some of your information → Connections → Followers and Following"</em>.</small>',
+    unsafe_allow_html=True
+)
 
 # Upload blocks
 with st.container():
@@ -91,8 +97,20 @@ if following_file and followers_file:
             # Display
             st.markdown("### 👇 Here's your list:")
             for _, row in df.iterrows():
+                # st.markdown(
+                #     f"""**{row['S. No.']}. {row['Username']}** - [Instagram]({row['Instagram Link']}) | [Threads]({row['Threads Link']}) — Followed on: `{row['Followed On']}`""",
+                #     unsafe_allow_html=True
+                # )
                 st.markdown(
-                    f"""**{row['S. No.']}. {row['Username']}** - [Instagram]({row['Instagram Link']}) | [Threads]({row['Threads Link']}) — Followed on: `{row['Followed On']}`""",
+                    f"""<div style="display:flex; align-items:center;">
+                        <input type="text" value="{row['Username']}" id="user-{row['S. No.']}" readonly style="margin-right: 10px;"/>
+                        <button onclick="navigator.clipboard.writeText('{row['Username']}')">Copy</button>
+                        <span style="margin-left: 10px;">
+                            <a href="{row['Instagram Link']}" target="_blank">Instagram</a> |
+                            <a href="{row['Threads Link']}" target="_blank">Threads</a> —
+                            <code>{row['Followed On']}</code>
+                        </span>
+                    </div>""",
                     unsafe_allow_html=True
                 )
         else:
@@ -102,10 +120,10 @@ if following_file and followers_file:
 st.markdown("---")
 st.markdown("### 🔗 Support & Follow Celsius 233")
 st.markdown("""
-- [☕ Buy Me a Coffee](https://buymeacoffee.com/celsius233books)
-- [💸 PayPal](https://paypal.me/celsius233books)
-- [📷 Instagram](https://www.instagram.com/celsius233books)
-- [🎥 YouTube](https://www.youtube.com/@Celsius233Books)
-- [🧵 Threads](https://www.threads.net/@celsius233books)
-- [🌐 Full Social List → Celsius 233 Universe](https://celsius233.com/universe)
+- [Buy Me a Coffee](https://buymeacoffee.com/celsius233books)
+- [PayPal](https://paypal.me/celsius233books)
+- [Instagram](https://www.instagram.com/celsius233books)
+- [YouTube](https://www.youtube.com/@Celsius233Books)
+- [Threads](https://www.threads.net/@celsius233books)
+- [Full Social List → Celsius 233 Universe](https://celsius233.com/universe)
 """)
