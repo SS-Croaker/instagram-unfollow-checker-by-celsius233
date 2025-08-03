@@ -1,0 +1,7 @@
+[theme]
+base = "dark"
+primaryColor = "#FF6F31"              # Fiery Orange
+backgroundColor = "#121212"           # Midnight Black
+secondaryBackgroundColor = "#1E1E1E"  # Slightly lighter for cards
+textColor = "#FF6F31"                 # White
+font = "sans serif"

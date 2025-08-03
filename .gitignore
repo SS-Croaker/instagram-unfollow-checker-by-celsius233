@@ -12,7 +12,7 @@ venv/
 .DS_Store
 
 # Streamlit cache
-.streamlit/
+
 
 # Logs and temporary files
 *.log
@@ -35,4 +35,4 @@ venv/
 *.csv
 
 # text files
-*.txt
+
