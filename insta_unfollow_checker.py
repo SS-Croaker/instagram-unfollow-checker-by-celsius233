@@ -23,7 +23,7 @@ st.markdown(
     '<em>"Accounts Center → Your information and permissions → Download your information → Select the profile → Some of your information → Connections → Followers and Following → Download to device → Date Range (All time) → Create files"</em>.</small>',
     unsafe_allow_html=True
 )
-st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
+
 
 # ----------- HELPERS -------------------------
 def is_safe_path(base_path, target_path):
@@ -107,6 +107,8 @@ def extract_from_zip(uploaded_zip):
 # ------------- FILE UPLOAD ------------------
 st.markdown("### 📤 Upload ZIP file from Instagram")
 zip_file = st.file_uploader("Upload Instagram data ZIP", type="zip", key="zip_upload")
+
+st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
 
 # ------------- VALIDATION ------------------
 if zip_file and zip_file.size > MAX_FILE_SIZE_MB * 1024 * 1024:
