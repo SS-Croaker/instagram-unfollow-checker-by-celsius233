@@ -90,28 +90,28 @@ zip_file = st.file_uploader("Upload Instagram data ZIP", type="zip", key="zip_up
 
 st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
 
-st.markdown("---")
+# st.markdown("---")
 
-st.markdown("### 📤 Option 2: Upload individual JSON files")
+# st.markdown("### 📤 Option 2: Upload individual JSON files")
 
-# Custom CSS to increase uploader box height
+# # Custom CSS to increase uploader box height
 
-col1, col2 = st.columns(2)
-with col1:
-    following_file = st.file_uploader("Upload `following.json`", type="json", key="following_json")
-with col2:
-    followers_file = st.file_uploader("Upload `followers_1.json`", type="json", key="followers_json")
+# col1, col2 = st.columns(2)
+# with col1:
+#     following_file = st.file_uploader("Upload `following.json`", type="json", key="following_json")
+# with col2:
+#     followers_file = st.file_uploader("Upload `followers_1.json`", type="json", key="followers_json")
 
-st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
+# st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
 
 # --- Load Files ---
 followers_json, following_json = None, None
 
 if zip_file:
     followers_json, following_json = extract_from_zip(zip_file)
-elif followers_file and following_file:
-    followers_json = json.load(followers_file)
-    following_json = json.load(following_file)
+# elif followers_file and following_file:
+#     followers_json = json.load(followers_file)
+#     following_json = json.load(following_file)
 
 # # Action button and logic
 # if following_file and followers_file:
