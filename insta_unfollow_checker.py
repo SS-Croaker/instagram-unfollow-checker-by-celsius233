@@ -95,9 +95,6 @@ def extract_from_zip(uploaded_zip):
                     try:
                         with open(full_path, "r", encoding="utf-8") as f:
                             content = json.load(f)
-                            if not is_valid_json_structure(content):
-                                st.error(f"`{file}` has an unexpected structure.")
-                                st.stop()
                             if file == "followers_1.json":
                                 followers_json = content
                             elif file == "following.json":
