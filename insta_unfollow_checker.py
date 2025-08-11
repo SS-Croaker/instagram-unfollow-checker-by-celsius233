@@ -95,32 +95,12 @@ st.markdown("---")
 st.markdown("### 📤 Option 2: Upload individual JSON files")
 
 # Custom CSS to increase uploader box height
-st.markdown("""
-    <style>
-    .big-uploader .stFileUploader {
-        padding: 20px 10px;
-        background-color: #f9f9f9;
-        border: 2px dashed #FF6F31;
-        border-radius: 8px;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
-# Section Header
-st.markdown("### 📤 Option 2: Upload individual JSON files")
-
-# Columns for following and followers_1
 col1, col2 = st.columns(2)
-
 with col1:
-    st.markdown('<div class="big-uploader">', unsafe_allow_html=True)
     following_file = st.file_uploader("Upload `following.json`", type="json", key="following_json")
-    st.markdown('</div>', unsafe_allow_html=True)
-
 with col2:
-    st.markdown('<div class="big-uploader">', unsafe_allow_html=True)
     followers_file = st.file_uploader("Upload `followers_1.json`", type="json", key="followers_json")
-    st.markdown('</div>', unsafe_allow_html=True)
 
 st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
 
