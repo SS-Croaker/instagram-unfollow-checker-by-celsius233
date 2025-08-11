@@ -5,9 +5,14 @@ import zipfile
 import tempfile
 import os
 from datetime import datetime, date
-import streamlit.components.v1 as components
+import mimetypes
+from pathlib import Path
 
-# Page setup
+# ----------------- SETTINGS -----------------
+MAX_FILE_SIZE_MB = 5
+EXPECTED_FILES = {"followers_1.json", "following.json"}
+
+# ------------- PAGE SETUP -------------------
 st.set_page_config(page_title="Insta Unfollow Checker by Celsius 233", layout="centered")
 st.title("Insta Unfollow Checker by Celsius 233")
 st.markdown("""
@@ -18,8 +23,15 @@ st.markdown(
     '<em>"Accounts Center → Your information and permissions → Download your information → Select the profile → Some of your information → Connections → Followers and Following → Download to device → Date Range (All time) → Create files"</em>.</small>',
     unsafe_allow_html=True
 )
+st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
 
-# Processing
+# ----------- HELPERS -------------------------
+def is_safe_path(base_path, target_path):
+    return os.path.commonpath([base_path]) == os.path.commonpath([base_path, target_path])
+
+def sanitize_filename(name):
+    return os.path.basename(name)
+
 def extract_entries(data):
     entries = []
     for entry in data:
@@ -44,39 +56,71 @@ def format_timestamp(ts):
         return datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
     except:
         return ts
-    
+
+def is_valid_json_structure(data):
+    return isinstance(data, list) and all("string_list_data" in d for d in data)
+
+# ---------- ZIP EXTRACTION ------------------
 def extract_from_zip(uploaded_zip):
     followers_json, following_json = None, None
+
     with tempfile.TemporaryDirectory() as tmpdirname:
         zip_path = os.path.join(tmpdirname, "insta.zip")
+
+        # Write ZIP to temp file
         with open(zip_path, "wb") as f:
             f.write(uploaded_zip.getvalue())
+
+        # MIME type check
+        mime_type, _ = mimetypes.guess_type(zip_path)
+        if mime_type != "application/zip":
+            st.error("Invalid file type. Please upload a valid .zip file.")
+            st.stop()
+
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            # Safety check for ZIP paths
+            for member in zip_ref.namelist():
+                member_path = os.path.join(tmpdirname, sanitize_filename(member))
+                if not is_safe_path(tmpdirname, member_path):
+                    st.error("Unsafe file path in ZIP. Aborting.")
+                    st.stop()
+
             zip_ref.extractall(tmpdirname)
-        for root, dirs, files in os.walk(tmpdirname):
+
+        # Walk and find target files
+        for root, _, files in os.walk(tmpdirname):
             for file in files:
-                if file == "followers_1.json":
-                    with open(os.path.join(root, file), "r", encoding="utf-8") as f:
-                        followers_json = json.load(f)
-                if file == "following.json":
-                    with open(os.path.join(root, file), "r", encoding="utf-8") as f:
-                        following_json = json.load(f)
+                if file in EXPECTED_FILES:
+                    full_path = os.path.join(root, file)
+                    try:
+                        with open(full_path, "r", encoding="utf-8") as f:
+                            content = json.load(f)
+                            if not is_valid_json_structure(content):
+                                st.error(f"`{file}` has an unexpected structure.")
+                                st.stop()
+                            if file == "followers_1.json":
+                                followers_json = content
+                            elif file == "following.json":
+                                following_json = content
+                    except Exception:
+                        st.error(f"Error reading `{file}`. Please make sure the file is correct.")
+                        st.stop()
     return followers_json, following_json
 
-
-# --- Upload Inputs ---
+# ------------- FILE UPLOAD ------------------
 st.markdown("### 📤 Upload ZIP file from Instagram")
 zip_file = st.file_uploader("Upload Instagram data ZIP", type="zip", key="zip_upload")
 
-st.caption("🔒 Your uploaded files are processed securely in your browser session and are not stored on any server.")
+# ------------- VALIDATION ------------------
+if zip_file and zip_file.size > MAX_FILE_SIZE_MB * 1024 * 1024:
+    st.error(f"❌ File too large. Max allowed is {MAX_FILE_SIZE_MB}MB.")
+    st.stop()
 
-# --- Load Files ---
 followers_json, following_json = None, None
-
 if zip_file:
     followers_json, following_json = extract_from_zip(zip_file)
 
-# --- Processing ---
+# ------------- PROCESSING ------------------
 if followers_json and following_json:
     if st.button("🔍 Reveal Unfollowers"):
         following_data = following_json.get("relationships_following", []) if isinstance(following_json, dict) else following_json
@@ -115,10 +159,9 @@ if followers_json and following_json:
         else:
             st.info("✅ Everyone you follow follows you back.")
 else:
-    st.info("⬆️ Please upload the required files above to begin.")
+    st.info("⬆️ Please upload the required ZIP file to begin.")
 
-
-# Footer
+# ------------- FOOTER ------------------
 st.markdown("---")
 st.markdown("### 🔗 Support & Follow Celsius 233")
 st.markdown("""
