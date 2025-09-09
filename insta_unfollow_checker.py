@@ -20,7 +20,7 @@ Upload the ZIP file you downloaded from Instagram to see who you follow that doe
 """)
 st.markdown(
     '<small>Need help? <a href="https://help.instagram.com/181231772500920" target="_blank">Learn how to download your followers & following list</a> → '
-    '<em>"Accounts Center → Your information and permissions → Download your information → Select the profile → Some of your information → Connections → Followers and Following → Download to device → Date Range (All time) → Create files"</em>.</small>',
+    '<em>"Accounts Center → Your information and permissions → Download your information → Select the profile → Some of your information → Connections → Followers and Following → Download to device → Date Range (All time) → "JSON" → Create files"</em>.</small>',
     unsafe_allow_html=True
 )
 
